@@ -23,10 +23,12 @@ MacOs: FTP client (e.g., [FileZilla](https://filezilla-project.org/))
 
 Then in R, run the following commands to install necessary packages (and any dependencies):
 	
-	install.packages(c())
+	install.packages(c("gplots", "pheatmap", "RColorBrewer"))
 	if (!requireNamespace("BiocManager"))
 	  install.packages("BiocManager")
 	BiocManager::install()
-	BiocManager::install(c("qvalue","DESeq2","WGCNA", "Rsubread"))
+	BiocManager::install(c("qvalue", "DESeq2", "WGCNA", "Rsubread", "genefilter"))
 
 [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
+
+[STAR](https://github.com/alexdobin/STAR)
