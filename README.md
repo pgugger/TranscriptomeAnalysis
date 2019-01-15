@@ -23,7 +23,7 @@ MacOs: FTP client (e.g., [FileZilla](https://filezilla-project.org/))
 
 Then in R, run the following commands to install necessary packages (and any dependencies):
 	
-	install.packages(c("gplots", "pheatmap", "RColorBrewer"))
+	install.packages(c("gplots", "pheatmap", "RColorBrewer", "igraph"))
 	if (!requireNamespace("BiocManager"))
 	  install.packages("BiocManager")
 	BiocManager::install()
