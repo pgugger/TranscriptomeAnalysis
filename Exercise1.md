@@ -4,13 +4,12 @@
 
 Log in to the cluster with `ssh` using the Terminal on a Mac or PuTTY on Windows. Type the following and enter your password
 
-	ssh -p 60307 username@132.247.186.44
+	ssh -p 60307 username@10.99.0.146
 	
-Now copy all the files for the workshop by typing
+The workshop folder has been copied to your home folder already. View the contents of you home folder by typing `ls`, then navigate to the `Workshop` folder with `cd Workshop` and type `ls` again to view the contents.
 
-	cp -r ./ /home/pgugger/Workshop
 	
-Navigate to the folder called "RNA-Seq_Data", and list the files in the folder. Remember `cd` and `ls`. When you get your Illumina data, they will likely come in FASTQ files, either in a series of files related to how they came off the sequencer, or as a set of files that have been demultiplexed, meaning each file represents one sample. If you used standard read indexing in the adapter, the sequencing center will usually demultiplex for you. Here, you will see that I have given you demultiplexed, compressed (.gz) FASTQ files, each named after a sample except one called `test.fq.gz`, which is what we will use for this exercise. FASTQ files have four lines per read: header starting with "@", sequence read, "+" (sometimes followed by additional info), and finally quality scores for each base.
+Navigate to the folder called "RNA-Seq_Data", and list the files in the folder (`cd` and `ls`). When you get your Illumina data, they will likely come in FASTQ files, either in a series of files related to how they came off the sequencer, or as a set of files that have been demultiplexed, meaning each file represents one sample. If you used standard read indexing in the adapter, the sequencing center will usually demultiplex for you. Here, you will see that I have given you demultiplexed, compressed (.gz) FASTQ files, each named after a sample except one called `test.fq.gz`, which is what we will use for this exercise. FASTQ files have four lines per read: header starting with "@", sequence read, "+" (sometimes followed by additional info), and finally quality scores for each base.
 
 We can look at a compressed file without extracting it:
 
