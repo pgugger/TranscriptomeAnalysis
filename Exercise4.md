@@ -58,10 +58,10 @@ If you have non-standard annotations or just like doing things yourself, you can
 
 We need to calculate numbers to fill a 2x2 contingency table and its marginal totals, for example
 
-					#Upregulated	#NotUpreg	#TOTAL
-	#GO:0006950		x				m-x			m
-	#NotGO:0006950	k-x				n-(k-x)		n
-	#TOTAL			k				m+n-k		m+n
+		#Upregulated	#NotUpreg	#TOTAL
+	#GO:0006950	x	m-x	m
+	#NotGO:0006950	k-x	n-(k-x)	n
+	#TOTAL	k	m+n-k	m+n
 
 *k* is easy because in our case it will just be the number of genes in our list of TAIR IDs of upregulted genes, which we saved as `drought.upreg.TAIR` (you can count the lines with `wc -l`). *m*+*n* is also easy because that is the number of all genes with TAIR IDs in our study (which you should have created in the previous section). To get *x*, the number of upregulated genes with GO:0006950 annotation, we need to extract the subset of the `Annotation_TAIR_GO.txt` file that matches upregulated TAIR IDs (in `drought.upreg.TAIR`) and then count how many instances (lines) of "GO:0006950" occur. I suggest using `grep` for both steps (piping the results of the first `grep` to the second `grep`. Finally, you can get *m* by repeating this procedure considering all the TAIR IDs in our study. Generate commands to fill in the table and use those to calculate any missing values.
 
