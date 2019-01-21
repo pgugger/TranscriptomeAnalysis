@@ -41,7 +41,7 @@ However, what if there are errors, so you don't have an exact match to the adapt
 
 First, we need to set up the configuration file, which also represents an opportunity to learn how to edit text files in the terminal. Open fastq_screen.conf with `vi` (or using your FTP client (*e.g.*, FileZilla) if you prefer not to learn the command line way). The top section indicates the path to the [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) aligner for aligning short reads to genomes. The "Threads" section indicates how many processors your computer has available to run the analysis. The last section, called "Database", give the path to different genomes or sequences that you want to align your data to. Note that the genomes/sequences must be indexed first (not FASTA) using `bowtie2-build`, which I have already done for you and placed in `~/Workshop/Genomes/`. Edit the path names to reflect your working directory (*e.g.*, in the "Database" section, change `/home/pgugger/*` to `/home/your_username/*`). To edit in `vi`, type `i` for "insert" then use the keyboard to edit; press `ESC` to stop editing; and then save and close the file by typing `:x` (or close without saving using `:q!`). You can now run the program on one example file.
 
-	fastq_screen --aligner bowtie2 --conf ~/Workshop/Illumina_Data/fastq_screen.conf test.fq.gz
+	fastq_screen --aligner bowtie2 --conf ~/Workshop/RNA-Seq_Data/fastq_screen.conf test.fq.gz
 
 When the program finishes, download the results files to your laptop, and open the HTML file. What fraction of reads align to the specified genomes? How many don't align anywhere? What could that mean!?
 
@@ -53,7 +53,7 @@ For many applications, you may want to remove low quality reads or adapter conta
 
 All of the files are already trimmed and filtered, except that I have provide you with one test file. Try running Trimmomatic on `test.fq.gz`.
 
-	java -jar trimmomatic.jar SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
+	java -jar path/to/trimmomatic.jar SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
 
 While it is running read about the various options I chose. These settings follow the suggested starting point but can be adjusted as needed. This command clips adapter contamination (`ILLUMINACLIP`) following the specified rules, removes low quality bases using a sliding window approach (`SLIDINGWINDOW`), trims bases off the start and end if they are very poor (`LEADING` and `TRAILING`), and discards any read that winds up under 40 bp (`MINLEN`). Notice that I also had it convert from the old Phred64 quality encoding to the newer Phred33.
 
