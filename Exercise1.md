@@ -53,7 +53,7 @@ For many applications, you may want to remove low quality reads or adapter conta
 
 All of the files are already trimmed and filtered, except that I have provide you with one test file. Try running Trimmomatic on `test.fq.gz`.
 
-	java -jar $TRIMMOMATIC SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
+	java -jar trimmomatic.jar SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
 
 While it is running read about the various options I chose. These settings follow the suggested starting point but can be adjusted as needed. This command clips adapter contamination (`ILLUMINACLIP`) following the specified rules, removes low quality bases using a sliding window approach (`SLIDINGWINDOW`), trims bases off the start and end if they are very poor (`LEADING` and `TRAILING`), and discards any read that winds up under 40 bp (`MINLEN`). Notice that I also had it convert from the old Phred64 quality encoding to the newer Phred33.
 
