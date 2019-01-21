@@ -53,7 +53,16 @@ For many applications, you may want to remove low quality reads or adapter conta
 
 All of the files are already trimmed and filtered, except that I have provide you with one test file. Try running Trimmomatic on `test.fq.gz`.
 
-	java -jar path/to/trimmomatic.jar SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
+	#Install Trimmomatic in your home folder
+	wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.38.zip
+	unzip Trimmomatic-0.38.zip
+	
+	#Copy adapter file to your working directory (~/Workshop/RNA-Seq_Data/)
+	cp Trimmomatic-0.38/adapters/TruSeq3-SE.fa ~/Workshop/RNA-Seq_Data/
+	cd ~/Workshop/RNA-Seq_Data/
+	
+	#Run Trimmomatic
+	java -jar ~/Trimmomatic-0.38/trimmomatic-0.38.jar SE -phred64 test.fq.gz test.trim.fq.gz TOPHRED33 ILLUMINACLIP:TruSeq3-SE.fa:2:30:10 SLIDINGWINDOW:4:15 LEADING:3 TRAILING:3 MINLEN:40
 
 While it is running read about the various options I chose. These settings follow the suggested starting point but can be adjusted as needed. This command clips adapter contamination (`ILLUMINACLIP`) following the specified rules, removes low quality bases using a sliding window approach (`SLIDINGWINDOW`), trims bases off the start and end if they are very poor (`LEADING` and `TRAILING`), and discards any read that winds up under 40 bp (`MINLEN`). Notice that I also had it convert from the old Phred64 quality encoding to the newer Phred33.
 
