@@ -239,13 +239,17 @@ You can save other subsets following this format if you like.
 
 Finally, we can make some plots to summarize the results. Here is one showing log<sub>2</sub>-fold change versus gene expression level with the significant ones colored red:
 
+	pdf("DESeq2_BeforeAfter.pdf")
 	plotMA(results.drought, ylim=c(-10,10), main="Before versus after drought", alpha=0.01)
+	dev.off()
  
 You can also make a principal components analysis plot of the overall expression patterns, but the data need to be transformed first to better meet the assumptions of the analysis. Regularized-log (rlog) is one popular transformation:
 
 	transformed.counts <- rlog(output)
 
+	pdf("DESeq2_PCA.pdf")
 	plotPCA(transformed.counts, intgroup="Drought")  #Specify a different intgroup to color points by that instead
+	dev.off()
 	
 Before we move on, let's save the transformed counts to file because we will use them tomorrow.
 
@@ -260,16 +264,25 @@ There are many ways you might want to further explore the data. Heatmaps are a p
 	mat <- as.matrix(dist.transformed.counts)
 	hmcol <- colorRampPalette(brewer.pal(9, "GnBu"))(100)
 	rownames(mat) <- colnames(mat) <- with(colData(all.input), paste(Drought, Population, sep=" : "))
+	
+	pdf("DESeq2_HeatmapSamples.pdf")
 	heatmap.2(mat, trace="none", col = rev(hmcol), margin=c(13, 13))
+	dev.off()
 
 	#Heatmap based on 30 most expressed genes
 	top.exp <- order(rowMeans(counts(all.input, normalized=F)), decreasing=TRUE)[1:30]
+	
+	pdf("DESeq2_HeatmapMostExpressed.pdf")
 	heatmap.2(assay(transformed.counts)[top.exp,], col = hmcol, Rowv = FALSE, Colv = FALSE, scale="none", dendrogram="none", trace="none", margin=c(10, 6))
+	dev.off()
 
 	#Heatmap based on 30 genes with most variable expression
 	library("genefilter")
 	topVarGenes <- head(order(rowVars(assay(transformed.counts)), decreasing=TRUE), 30)
+	
+	pdf("DESeq2_HeatmapMostVariable.pdf")
 	heatmap.2(assay(transformed.counts)[topVarGenes, ], scale="row", trace="none", dendrogram="column", col = colorRampPalette(rev(brewer.pal(9, "RdBu")))(255))
+	dev.off()
 
 #### Gene function
 
