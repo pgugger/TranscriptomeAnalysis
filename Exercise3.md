@@ -201,15 +201,15 @@ Before we move on to testing what might explain module membership, let's briefly
 	inModule.blue = moduleColors=="blue"
 	modTOM.blue = TOM[inModule.blue, inModule.blue]
 	dim(modTOM.blue)
-	head(modTOM.blue[1:5,1:5]
-	dimnames(modTOM.blue) = list(modGenes.blue, modGenes.blue). #modGenes.blue defined above
+	head(modTOM.blue[1:5,1:5])
+	dimnames(modTOM.blue) = list(modGenes.blue, modGenes.blue) #modGenes.blue defined above
 	
 To graph the network based on the TOM, we need to use other software. One option is to export for other software (more below). Another is to use an `R` package such as `igraph`. 
 	
 	library(igraph)
 	graph <- graph.adjacency(modTOM.blue, weighted=TRUE, mode="undirected", diag=FALSE)
 	
-	plot("Network.blue.pdf")
+	pdf("Network.blue.pdf")
 	plot(graph)
 	dev.off()
 	
