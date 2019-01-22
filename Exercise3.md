@@ -132,7 +132,7 @@ To plot, we convert numeric labels into colors and then use a built-in plotting 
 	plotDendroAndColors(gene.tree, dynamicColors, "Dynamic Tree Cut", dendroLabels = FALSE, hang = 0.03, addGuide = TRUE, guideHang = 0.05, main = "Gene dendrogram and module colors")
 	dev.off()
 
-Beneath the dendrogram we now see colors depicting which module each gene belongs to. In this example you will get one or two colored modules, plus gray (which represents unassigned genes). 
+Beneath the dendrogram we now see colors depicting which module each gene belongs to (gray represents unassigned genes). How many modules did you get? 
 
 `cutreeDynamic` sometimes leads to "too many" modules, meaning that some modules may still be highly correlated with each other. We might want to combine those. To do so, we calculate the module "eigengene", which is a synthetic gene that captures the main axis of variation of all genes in the module. As the name implies, the eigengene is generated based on the first axis of principal components analysis. To calculate, we can use the built-in function.
 
@@ -150,7 +150,7 @@ Then, we can build a dendrogram of the eigengenes and use it to combine modules 
 	plot(METree, main = "Clustering of module eigengenes", xlab = "", sub = "")
 	dev.off()
 
-In our case, we do not have many modules (I got two colored ones), so there is little or no possibility to combine any. My two modules are fairly different as suggested by the height around 0.75, so I would not combine them. If we had many modules, some might be tighly clustered on the dendrogram at low heights (<0.25) and we could use cutoff value of height (such as 0.25) on the dendrogram to combine some that fall below that height. Here is the example from the developers' tutorial. In our case, it will not change anything, though.
+In my dendrogram, many modules are defined by low heights less than 0.25, so we might consider merging these.
 	
 	#Choose a cutoff
 	MEDissThres = 0.25
