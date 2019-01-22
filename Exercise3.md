@@ -33,7 +33,7 @@ Finally, the count table needs to be transposed for use in `WGCNA`.
 
 We also need the sample information, and this time, we will use the DroughtDummy variable, spatial, and environmental variables.
 
-	sample.info <- read.table("sample.info", header=T, row.names=1)
+	sample.info <- read.table("../sample.info", header=T, row.names=1)
 	sample.info
 
 	sample.wgcna <- sample.info[ , 5:13]
