@@ -190,7 +190,7 @@ From `sample.info`, we need to extract only the variables that we want to test i
 Now we can define the complete input data frame with a built-in DESeq2 function that requires the count data, experimental design, and model as inputs:
 
 	all.input <- DESeqDataSetFromMatrix(countData = all.counts, colData = exp.design, design = ~Lane + Population + Drought)
-	#Adjsut the design part according to the variables you chose in exp.deisgn
+	#Adjust the design part according to the variables you chose in exp.design
 
 Running the DESeq2 model is very simple.
 
