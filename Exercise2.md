@@ -154,7 +154,7 @@ Here is one way to do it while staying in the Linux terminal:
 	paste <(cut -f1 MC511_after.counts) <(cat all.temp) > all2.temp
 	
 	#Add header row based on sample names in sample.info (assumes same order)
-	paste <(echo -e "Transcript\t") <(cut -f1 ~/Workshop/sample.info | tail -n +2 | tr '\n' '\t') | cat - all2.temp > all.counts 
+	paste <(echo -e "Transcript") <(cut -f1 ~/Workshop/sample.info | tail -n +2 | tr '\n' '\t') | cat - all2.temp > all.counts 
 	
 	#Confirm result
 	less -S all.counts
