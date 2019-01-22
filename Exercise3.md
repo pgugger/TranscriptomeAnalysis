@@ -6,7 +6,7 @@ In this exercise, we will work through an example of WGCNA using the same RNA-Se
 
 ### Preparing the data and environment
 
-Enter `R` to begin. 
+From the Linux terminal enter `R` to begin: `srun -p ALL --mem 20G --cpus-per-task 10 --pty R`. In `R`, set the working environment:
 
 	setwd("~/Workshop_RNA/WGCNA/")
 	library(WGCNA)
