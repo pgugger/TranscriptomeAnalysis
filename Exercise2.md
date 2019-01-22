@@ -319,7 +319,7 @@ Then, we are ready to align reads. However, the STAR aligner requires decompress
 	
 Using what you learned about loops earlier today, create a `for` loop to align all the samples (FASTQ files) to the reference genome using the following command as a template
 	
-	STAR --runThreadN 16 --twopassMode Basic --twopass1readsN -1 --genomeDir ~/Workshop/Genomes/Qlobata_genome_v05 --sjdbOverhang 50 --readFilesIn MC5-11after.fq --outSAMattributes All --outSAMtype BAM SortedByCoordinate --outFileNamePrefix MC511_after
+	STAR --runThreadN 16 --twopassMode Basic --twopass1readsN -1 --genomeDir ~/Workshop/Genomes/Qlobata_genome_v05 --sjdbOverhang 50 --readFilesIn MC511_after.fq --outSAMattributes All --outSAMtype BAM SortedByCoordinate --outFileNamePrefix MC511_after
 
 Each sample takes about 2 minutes to run so your loop with 12 samples will take over 20 minutes. In the meantime, read about the options I chose in my example command and think about how they might (or might not) differ for your study. When complete, you will see a number of outputs, which you can read about in the manual. The most important for us now are the BAM files.
 
