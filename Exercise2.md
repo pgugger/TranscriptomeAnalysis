@@ -311,7 +311,7 @@ Take a look at the GTF file using `less`, so you can understand what it contains
 
 Now we are ready for the [STAR](https://github.com/alexdobin/STAR) aligner. First we need to index the genome for use with `STAR`.
 
-	STAR --runThreadN 16 --runMode genomeGenerate --genomeDir /home/pgugger/Workshop/Genomes/Qlobata_genome_v05 --genomeFastaFiles /home/pgugger/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.fasta --sjdbOverhang 50 --sjdbGTFfile /home/pgugger/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.subset.gtf --sjdbGTFtagExonParentTranscript Parent --genomeSAindexNbases 12 --genomeChrBinNbits 11 
+	STAR --runThreadN 16 --runMode genomeGenerate --genomeDir ~/Workshop/Genomes/Qlobata_genome_v05 --genomeFastaFiles ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.fasta --sjdbOverhang 50 --sjdbGTFfile ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.subset.gtf --sjdbGTFtagExonParentTranscript Parent --genomeSAindexNbases 12 --genomeChrBinNbits 11 
 
 Then, we are ready to align reads. However, the STAR aligner requires decompressed FASTQ, so we need to `gunzip` them first. Here is how you can do all the files at once in parallel (rather than serially with `gunzip *.fq.gz`)
 
@@ -333,7 +333,7 @@ Load the list of BAM files that we just created with `STAR`.
 	bam.files <- list.files(path = ".", pattern = ".bam$", full.names = TRUE)
 	bam.files
 
-Now we can use the `featureCounts` function in `Rsubread` to generate read counts per exon.	Notice in the command below that we need to indicate the annotation file (`annot.ext="Qlobata.reduced.subset.gtf"`), specify the type (`isGTFAnnotationFile=T`), specify which feature we are interested in (`GTF.featureType="exon"`), and within what attribute they are contained (`GTF.attrType="transcript_id"`). I also specified a minimum read mapping quality (`minMQS=20`).
+Now we can use the `featureCounts` function in `Rsubread` to generate read counts per exon. Notice in the command below that we need to indicate the annotation file (`annot.ext="Qlobata.reduced.subset.gtf"`), specify the type (`isGTFAnnotationFile=T`), specify which feature we are interested in (`GTF.featureType="exon"`), and within what attribute they are contained (`GTF.attrType="transcript_id"`). I also specified a minimum read mapping quality (`minMQS=20`).
 	
 	feature.counts <- featureCounts(bam.files, annot.ext="Qlobata.reduced.subset.gtf", isGTFAnnotationFile=T, minMQS=20, useMetaFeatures=F, GTF.featureType="exon", GTF.attrType="transcript_id")
 
