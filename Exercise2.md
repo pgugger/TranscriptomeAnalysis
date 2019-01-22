@@ -311,7 +311,7 @@ Take a look at the GTF file using `less`, so you can understand what it contains
 
 Now we are ready for the [STAR](https://github.com/alexdobin/STAR) aligner. First we need to index the genome for use with `STAR`.
 
-	STAR --runThreadN 16 --runMode genomeGenerate --genomeDir ~/Workshop/Genomes/Qlobata_genome_v05 --genomeFastaFiles ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.fasta --sjdbOverhang 50 --sjdbGTFfile ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.subset.gtf --sjdbGTFtagExonParentTranscript Parent --genomeSAindexNbases 12 --genomeChrBinNbits 11 
+	STAR --runThreadN 16 --runMode genomeGenerate --genomeDir ~/Workshop/Genomes/Qlobata_genome_v05 --genomeFastaFiles ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.fasta --sjdbOverhang 50 --sjdbGTFfile ~/Workshop/Genomes/Qlobata_genome_v05/Qlobata.reduced.subset.gff --sjdbGTFtagExonParentTranscript Parent --genomeSAindexNbases 12 --genomeChrBinNbits 11 
 
 Then, we are ready to align reads. However, the STAR aligner requires decompressed FASTQ, so we need to `gunzip` them first. Here is how you can do all the files at once in parallel (rather than serially with `gunzip *.fq.gz`)
 
