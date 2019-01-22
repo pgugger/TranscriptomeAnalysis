@@ -10,7 +10,7 @@ Enter `R` to begin.
 
 	setwd("~/Workshop_RNA/WGCNA/")
 	library(WGCNA)
-	enableWGCNAThreads(nThreads = 16)  #May not work with RStudio
+	enableWGCNAThreads(nThreads = 10)  #May not work with RStudio
 	options(stringsAsFactors = FALSE)
 
 We will use the rlog-transformed counts from `DESeq2` as input to `WGCNA`. However, it is best to restrict the data set to only the transcripts (of features) that have sufficient expression levels. We will define "sufficient" as >100 reads across all the samples, but this is not meant to be a universal suggestion and it may not even be "optimal" for this data set. The following code will subset the data accordingly and assumes that the tables are organized the same.
