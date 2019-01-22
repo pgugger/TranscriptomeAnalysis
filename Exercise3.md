@@ -79,14 +79,14 @@ Co-expression networks are defined as "undirected, weighted gene networks. The n
 	text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=0.9,col="red")
 	dev.off()
 
-The resulting plot on the left shows how the fit to a "scale-free topology" model increases as the chosen power increases. We want to choose the value at the start of the plateau (I chose 5 in my test run with slightly different data).
+The resulting plot on the left shows how the fit to a "scale-free topology" model increases as the chosen power increases. We want to choose the value at the start of the plateau (I chose 9 in my test run).
 
 #### One-step network construction and module detection
 
 Once we choose the soft thresholding power, the entire network construction and module detection process can be performed in one step with the `blockwiseModules` function. Do not run this code because we will run everything step by step below.
 
 	#Do not run
-	network <- blockwiseModules(counts.wgcna, power = 5, TOMType = "unsigned", minModuleSize = 30, reassignThreshold = 0, mergeCutHeight = 0.25, numericLabels = TRUE, pamRespectsDendro = FALSE, saveTOMs = TRUE, saveTOMFileBase = "AllTOM", verbose = 3, maxBlockSize = 5000, corType="bicor")
+	network <- blockwiseModules(counts.wgcna, power = 9, TOMType = "unsigned", minModuleSize = 30, reassignThreshold = 0, mergeCutHeight = 0.25, numericLabels = TRUE, pamRespectsDendro = FALSE, saveTOMs = TRUE, saveTOMFileBase = "AllTOM", verbose = 3, maxBlockSize = 5000, corType="bicor")
 
 The function calculates the adjacency matrix using a kind of correlation called biweight midcorrelation (`bicor`, instead of Pearson) and the power we chose above, converts to topological overlap matrix (TOM), performs hierarchical clustering on dissimilarities based on the TOM, and finally identifies modules with a minimum size (number of genes) of 30 by cutting the dendrogram following the `mergeCutHeight` parameter. In the next section, we do this step by step to see the products and consider the various options that you can fine-tune in your analyses.
 
@@ -94,7 +94,7 @@ The function calculates the adjacency matrix using a kind of correlation called 
 
 The first step is to calculate the adjacency matrix with the soft thresholding power we chose above and midweight bicorrelation (as suggested by the developers). You could use other correlation metrics, such as Pearson or Spearman, if you prefer.
 
-	adjacency = adjacency(counts.wgcna, power = 5, corFnc = "bicor")
+	adjacency = adjacency(counts.wgcna, power = 9, corFnc = "bicor")
 
 If you look at a piece (first five rows and five columns) of the adjacency matrix you can see it is essentially a symmetrical matrix of pairwise correlations.
 
