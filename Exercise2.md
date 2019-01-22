@@ -130,7 +130,7 @@ The final steps to go from alignments to read counts per transcript are to index
 		samtools idxstats ${sample}.bam > ${sample}.counts
 	done
 
-Save this script (*e.g.*, `align_count.sh`), make it executable (`chmod +x align_count.sh`, and run (`./align_count.sh`). It will take about 10-15 minutes to run and as it completes each sample it provides summary information about the fraction of reads that aligned, *etc*.
+Save this script (*e.g.*, `align_count.sh`), make it executable (`chmod +x align_count.sh`), and run (`./align_count.sh`). It will take about 10-15 minutes to run and as it completes each sample it provides summary information about the fraction of reads that aligned, *etc*.
 
 The results include a sorted BAM file, an associated BAI index file, and a text file with counts per transcript for each sample. View one of the count files with `less`. The first column is the transcript name, the second is the length of the transcript in the reference FASTA, and the third is the number of reads that map to each transcript, and the fourth is the number of unmapped reads (ignore).
 
