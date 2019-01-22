@@ -8,7 +8,7 @@ In this exercise, we will work through an example of WGCNA using the same RNA-Se
 
 From the Linux terminal enter `R` to begin: `srun -p ALL --mem 20G --cpus-per-task 10 --pty R`. In `R`, set the working environment:
 
-	setwd("~/Workshop_RNA/WGCNA/")
+	setwd("~/Workshop/WGCNA/")
 	library(WGCNA)
 	enableWGCNAThreads(nThreads = 10)  #May not work with RStudio
 	options(stringsAsFactors = FALSE)
@@ -16,7 +16,7 @@ From the Linux terminal enter `R` to begin: `srun -p ALL --mem 20G --cpus-per-ta
 We will use the rlog-transformed counts from `DESeq2` as input to `WGCNA`. However, it is best to restrict the data set to only the transcripts (of features) that have sufficient expression levels. We will define "sufficient" as >100 reads across all the samples, but this is not meant to be a universal suggestion and it may not even be "optimal" for this data set. The following code will subset the data accordingly and assumes that the tables are organized the same.
 
 	transformed.counts <- read.table("transformed.counts", header=T, row.names=1)
-	all.counts <- read.table("~/Workshop_RNA/DESeq2/all.counts", header=T, row.names=1)
+	all.counts <- read.table("~/Workshop/DESeq2/all.counts", header=T, row.names=1)
 
 	counts.high <- transformed.counts[ which( rowSums(all.counts) > 100) , ]
 	dim(counts.high)
