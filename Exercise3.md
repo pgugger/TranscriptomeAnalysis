@@ -198,16 +198,24 @@ Before we move on to testing what might explain module membership, let's briefly
 	head(modTOM.blue[1:5,1:5])
 	dimnames(modTOM.blue) = list(modGenes.blue, modGenes.blue) #modGenes.blue defined above
 	
+To produce a clearer plot, we can subsample the top hub genes.
+
+	nTop = 30
+	genes = names(counts.wgcna)
+	IMConn = softConnectivity(counts.wgcna[, genes[(moduleColors=="blue")]]);
+	top = (rank(-IMConn) <= nTop)
+	modTOM.blue[top, top]
+	
 To graph the network based on the TOM, we need to use other software. One option is to export for other software (more below). Another is to use an `R` package such as `igraph`. 
 	
 	library(igraph)
-	graph <- graph.adjacency(modTOM.blue, weighted=TRUE, mode="undirected", diag=FALSE)
+	graph <- graph.adjacency(modTOM.blue[top, top], weighted=TRUE, mode="undirected", diag=FALSE)
 	
 	pdf("Network.blue.pdf")
 	plot(graph)
 	dev.off()
 	
-The plot shows a big blob in this case but you might want to play around with setting threshold for showing connections, or weight the thickness of lines accorging to strength, or adjust the node size, *etc*.
+The plot shows a big blob in this case but you might want to play around with setting threshold for showing connections, or weight the thickness of lines accorging to strength, or adjust the node size, or choose another module that might be clearer or more interesting, *etc*.
 
 	#e.g., setting TO < 0.1 to 0
 	modTOM.blue[ abs(modTOM.blue) < 0.1] <- 0
