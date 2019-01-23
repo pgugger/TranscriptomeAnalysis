@@ -274,7 +274,7 @@ We can look in a bit more detail at the intramodular correlations. I will choose
 	names(geneTraitSignificance) = paste("GS.", names(drought), sep="")
 	names(GSPvalue) = paste("p.GS.", names(drought), sep="")
 
-	module = "turquoise"
+	module = "blue"
 	column = match(module, modNames)
 	moduleGenes = moduleColors==module
 	
