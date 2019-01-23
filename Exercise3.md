@@ -142,7 +142,7 @@ Then, we can build a dendrogram of the eigengenes and use it to combine modules 
 	METree = hclust(as.dist(MEDiss), method = "average");
 	
 	#Plot the resulting eigengene dendrogram
-	pdf("Dendrogram_byEigendene.pdf")
+	pdf("Dendrogram_byEigengene.pdf")
 	plot(METree, main = "Clustering of module eigengenes", xlab = "", sub = "")
 	abline(h=0.25, col = "red")
 	dev.off()
