@@ -217,8 +217,8 @@ To graph the network based on the TOM, we need to use other software. One option
 	
 The plot shows a big blob in this case but you might want to play around with setting threshold for showing connections, or weight the thickness of lines accorging to strength, or adjust the node size, or choose another module that might be clearer or more interesting, *etc*.
 
-	#e.g., setting TO < 0.1 to 0
-	modTOM.blue[ abs(modTOM.blue) < 0.1] <- 0
+	#e.g., setting TO < 0.5 to 0
+	modTOM.blue[ abs(modTOM.blue) < 0.5] <- 0
 	
 	#Then rerun graph.adjacency and plot
 	
