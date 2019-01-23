@@ -59,11 +59,7 @@ Notice that the samples collected before drought are all on one branch of the de
 
 ### Defining gene expression modules
 
-Now we will define gene expression modules based on hierarchical clustering of the *genes* (not samples) in a very particular way. 
-
-The WGCNA method selects the threshold for constructing the network based on the scale-free topology of gene co-expression networks. This method constructs the network for several thresholds and selects the threshold which leads to a network with scale-free topology. Moreover, the WGCNA method constructs a weighted network which means all possible edges appear in the network, but each edge has a weight which shows how significant is the co-expression relationship corresponding to that edge.
-
-Co-expression networks are defined as "undirected, weighted gene networks. The nodes of such a network correspond to gene expression profiles, and edges between genes are determined by the pairwise correlations between gene expressions. By raising the absolute value of the correlation to a power [>1], the weighted gene co-expression network construction emphasizes high correlations at the expense of low correlations" [(Langfelder & Horvath 2008)](https://doi.org/10.1186/1471-2105-9-559). The [soft  thresholding  power](https://doi.org/10.2202/1544-6115.1128) is a key aspect of what makes the co-expression network weighted, hence **W**GCNA. Thus, we first need to define this value. This weighted network is called the "adjacency matrix". The adjacency matrix is then converted to another similarity matrix called the "topological overlap matrix", which helps minimize noise and spurious correlations. This, in turn, is then converted to a dissimilarity measure for use in hierarchical clustering. The resulting clustering dendrogram provides a framework for defining modules with various criteria to define minimum module size (number of genes) and cutoff points on the dendrogram. More information on these steps below. Let's start with choosing the soft threshold power.
+Now we will define gene expression modules based on hierarchical clustering of the *genes* (not samples) in a very particular way. Co-expression networks are "undirected, weighted gene networks. The nodes of such a network correspond to gene expression profiles, and edges between genes are determined by the pairwise correlations between gene expressions. By raising the absolute value of the correlation to a power [>1], the weighted gene co-expression network construction emphasizes high correlations at the expense of low correlations" [(Langfelder & Horvath 2008)](https://doi.org/10.1186/1471-2105-9-559). The [soft  thresholding  power](https://doi.org/10.2202/1544-6115.1128) is a part of what makes the co-expression network weighted, hence **W**GCNA. Thus, we first need to define this value. This weighted network is called the "adjacency matrix". The adjacency matrix is then converted to another similarity matrix called the "topological overlap matrix", which helps minimize noise and spurious correlations. This, in turn, is then converted to a dissimilarity measure for use in hierarchical clustering. The resulting clustering dendrogram provides a framework for defining modules with various criteria to define minimum module size (number of genes) and cutoff points on the dendrogram. More information on these steps below. Let's start with choosing the soft threshold power.
 
 `WGCNA` includes a function to choose the "best" value for the soft threshold power based on the criterion of approximate "scale-free topology." Scale-free topology is an observed phenomenon in biological networks in which the probability that a node is connected with another node decays as a power law. The function evaluates a series of user-defined powers and returns a set of network indices to help choose the best value.
 
@@ -120,7 +116,7 @@ Plot the resulting clustering tree (dendrogram).
 
 In the dendrogram, each of the tips is a gene. There are so many that they are hard to distinguish individual lines. To identify how many modules there are we will use the function `cutreeDynamic`. We have to define a minimum module size, which I arbitrarily set to 20.
 
-	dynamicMods = cutreeDynamic(dendro = gene.tree, distM = dissTOM, deepSplit = 4, pamRespectsDendro = FALSE, minClusterSize = 20);
+	dynamicMods = cutreeDynamic(dendro = gene.tree, distM = dissTOM, deepSplit = 4, pamRespectsDendro = FALSE, minClusterSize = 30);
 	table(dynamicMods)
 
 To plot, we convert numeric labels into colors and then use a built-in plotting function
@@ -150,7 +146,7 @@ Then, we can build a dendrogram of the eigengenes and use it to combine modules 
 	plot(METree, main = "Clustering of module eigengenes", xlab = "", sub = "")
 	dev.off()
 
-In my dendrogram, many modules are defined by low heights less than 0.25, so we might consider merging these.
+In my dendrogram, several modules are defined by low heights less than 0.25, so we might consider merging these.
 	
 	#Choose a cutoff
 	MEDissThres = 0.25
@@ -192,7 +188,7 @@ We may also want to know what genes are in each module, and which gene within ea
 
 The list of genes in each module will be useful for further exploration of functional annotation and enrichment tomorrow. The specific hub genes might also have interesting functions that interact with many other genes. Which genes are hub genes in your analysis? Look up their functions in the annotation files I included in the reference transcriptome folder. Anything interesting?
 
-So far what we have learned is that there is a large group of genes that show similar expression patterns as represented by one large module, plus a smaller module that must exhibit somewhat different expression patterns. This simple scenario may not be typical, as normally we would see more modules with fewer genes in each. Smaller modules might make it easier to narrow down interesting genes for further analysis. Nonetheless, there is more we can do to see what might explain (or be correlated with) the large cluster of co-expressed genes.
+So far what we have learned is that there are several groups of genes that show similar expression patterns as represented by thier respective modules. Modules might make it easier to narrow down interesting genes for further analysis. Nonetheless, there is more we can do to see what might explain (or be correlated with) the co-expressed modules.
 
 ### Network visualization
 
@@ -230,8 +226,8 @@ We might wonder whether certain measurements (*e.g.*, traits, environmental vari
 
 First, we define a few terms and reorganize a bit.
 
-	nGenes = ncol(counts.wgcna);
-	nSamples = nrow(counts.wgcna);
+	nGenes = ncol(counts.wgcna)
+	nSamples = nrow(counts.wgcna)
 	
 	#Recalculate module eigengenes with color labels
 	MEs0 = moduleEigengenes(counts.wgcna, moduleColors)$eigengenes
@@ -246,13 +242,13 @@ Finally, we can plot the results in heatmap form, showing the correlations and *
 
 	textMatrix = paste(signif(moduleTraitCor, 2), "\n(",signif(moduleTraitPvalue, 1), ")", sep = "")
 	dim(textMatrix) = dim(moduleTraitCor)
-	par(mar = c(6, 8.5, 3, 3))
 
 	pdf("Heatmap_Module-EnvironmentCorrelations.pdf")
+	par(mar = c(6, 8.5, 3, 3))
 	labeledHeatmap(Matrix = moduleTraitCor,xLabels = names(sample.wgcna), yLabels = names(MEs), ySymbols = names(MEs), colorLabels = FALSE, colors = blueWhiteRed(50), textMatrix = textMatrix,setStdMargins = FALSE, cex.text = 0.5, zlim = c(-1,1), main = paste("Module-trait relationships"))
 	dev.off()
 
-Which variables are most strongly correlated with each module? In mine, the large module is very highly correlated with the drought treatment, which is perhaps no surprise. The gray module has moderate to high correlations with some variables related to the source environment. What might this mean?
+Which variables are most strongly correlated with each module? In mine, one or two modules are very highly correlated with the drought treatment, which is perhaps no surprise. Several modules have moderate to high correlations with variables related to the source environment. What might this mean?
 
 We can look in a bit more detail at the intramodular correlations. I will choose the `DroughtDummy` since it is so highly correlated with one of the modules, but you should take a look at some of the others too. The details of the following code are not so important, but essentially we are looking at the correlation between module membership of a gene and the significance of that gene's association with drought, in this case. Gene signficance is the correlation between the gene and the environmental variable, while module membership is the correlation of the module eigengene with the gene expression profile. 
 
