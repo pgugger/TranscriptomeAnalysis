@@ -144,15 +144,13 @@ Then, we can build a dendrogram of the eigengenes and use it to combine modules 
 	#Plot the resulting eigengene dendrogram
 	pdf("Dendrogram_byEigendene.pdf")
 	plot(METree, main = "Clustering of module eigengenes", xlab = "", sub = "")
+	abline(h=0.25, col = "red")
 	dev.off()
 
 In my dendrogram, several modules are defined by low heights less than 0.25, so we might consider merging these.
 	
 	#Choose a cutoff
 	MEDissThres = 0.25
-
-	#Plot the cut line into the dendrogram
-	abline(h=MEDissThres, col = "red")
 
 	#Call an automatic merging function
 	merge = mergeCloseModules(counts.wgcna, dynamicColors, cutHeight = MEDissThres, verbose = 3)
